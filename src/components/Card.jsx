@@ -21,36 +21,94 @@ const CardComponent = ({ jobDetails }) => {
     setOpen(false);
   };
 
+  const formatRole = (string) => {
+    return string !== "ios"
+      ? string.charAt(0).toUpperCase() + string.slice(1)
+      : string.toUpperCase();
+  };
+
+  const getEstimatedSalary = () => {
+    return `${jobDetails.minJdSalary} - ${jobDetails.maxJdSalary} ${jobDetails.salaryCurrencyCode}`;
+  };
+
+  const getExperience = (constants) => {
+    return `${jobDetails.minExp} - ${jobDetails.maxExp} ${constants.kYears}`;
+  };
+
   return (
-    <Card>
+    <Card
+      sx={{
+        maxWidth: "80%",
+        margin: "1%",
+        borderRadius: "15px",
+        boxShadow: "1px 1px 6px rgba(0,0,0,0.3)",
+      }}
+    >
       <CardHeader
         avatar={<Avatar aria-label="company logo" />}
         title={jobDetails.companyName}
-        subheader={`${jobDetails.jobTitle} - ${jobDetails.location}`}
+        subheader={formatRole(jobDetails.jobRole)}
       />
+      <span>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          sx={{ margin: "1%" }}
+        >
+          {jobDetails.location.toUpperCase()}
+        </Typography>
+      </span>
       <CardContent>
-        <Typography variant="h6" color="textSecondary">
-          {_constants.kEstimatedSalary}: {jobDetails.estimatedSalary}
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          sx={{ fontWeight: "bold" }}
+        >
+          {_constants.kEstimatedSalary}: {getEstimatedSalary()}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           {_constants.kJobDescription}:{" "}
-          <a href="#" onClick={handleOpen}>
+          <span
+            style={{
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {jobDetails.jobDetailsFromCompany.substring(0, 100)}...
+          </span>
+          <a href="#open" onClick={handleOpen}>
             {_constants.kShowMore}
           </a>
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {_constants.kMinimumExperience}: {jobDetails.minimumExperience}
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          sx={{ fontWeight: "bold" }}
+        >
+          {_constants.kMinimumExperience}: {getExperience(_constants)}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">{_constants.kEasyApply}</Button>
-        <Button size="small">{_constants.kReferral}</Button>
+      <CardActions sx={{ flexDirection: "column" }}>
+        <Button size="small" sx={{ background: "blue", marginBottom: "10px" }}>
+          {_constants.kEasyApply}
+        </Button>
+        <Button size="small" sx={{ background: "red" }}>
+          {_constants.kReferral}
+        </Button>
       </CardActions>
       <Modal open={open} onClose={handleClose}>
-        <div>
-          <h2>{_constants.kAbout}</h2>
-          <p>{jobDetails.jobDetailsFromCompany}</p>
-        </div>
+        <Card>
+          <CardContent>
+            <Typography variant="h6">{_constants.kAbout}</Typography>
+            <Typography variant="body2">
+              {jobDetails.jobDetailsFromCompany}
+            </Typography>
+          </CardContent>
+        </Card>
       </Modal>
     </Card>
   );

@@ -7,3 +7,4 @@ export const kAbout = "About Job";
 export const kShowMore = "Show More";
 export const kEasyApply = "Easy Apply";
 export const kReferral = "Unlock Referral Asks";
+export const kYears = "years";
