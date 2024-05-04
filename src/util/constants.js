@@ -1,0 +1,9 @@
+export const kEstimatedSalary = "Estimated Salary";
+export const kJobTitle = "Job Title";
+export const kLocation = "Location";
+export const kJobDescription = "Job Description";
+export const kMinimumExperience = "Minimum Experience";
+export const kAbout = "About Job";
+export const kShowMore = "Show More";
+export const kEasyApply = "Easy Apply";
+export const kReferral = "Unlock Referral Asks";
